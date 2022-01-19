@@ -82,13 +82,13 @@ int main()
     d.push2(3);
     d.push1(4);
     d.push2(5);
-    cout << d.top1()<<" ";
+    cout << d.top1() << " ";
     d.pop1();
-    cout << d.top1()<<" ";
+    cout << d.top1() << " ";
 
-    cout << d.top2()<<" ";
+    cout << d.top2() << " ";
     d.pop2();
     d.pop2();
-    cout << d.top2()<<" ";
+    cout << d.top2() << " ";
     return 0;
 }
