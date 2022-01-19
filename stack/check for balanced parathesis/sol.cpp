@@ -1,47 +1,43 @@
 #include <bits/stdc++.h>
 using namespace std;
-class Stack
+bool match(char a, char b)
 {
-    int cap;
-    int *arr;
-    int top;
-
-public:
-    Stack(int cap)
+    if ((a == '(' && b == ')') || (a == '{' && b == '}') || (a == '[' && b == ']'))
     {
-        arr = new int[cap];
-        top = -1;
+        return true;
     }
-    void push(int data)
+    return false;
+}
+bool bal(string s)
+{
+    stack<char> st;
+    for (int i = 0; i < s.length(); i++)
     {
-        if(top==cap){
-            cout<<"full";
-            return ;
+        char c = s[i];
+        if (c == '(' || c == '{' || c == '[')
+        {
+            st.push(c);
         }
-        top++;
-        arr[top] = data;
-    }
-    void pop()
-    {
-        if(top==-1){
-            cout<<"empty";
-            return ;
+        else
+        {
+            if (st.empty())
+            {
+                return false;
+            }
+            else if (match(st.top(), c) == false)
+            {
+                return false;
+            }
+            else
+            {
+                st.pop();
+            }
         }
-        top--;
     }
-    int front(){
-        if(top==-1){
-            return -1;
-        }
-        return arr[top];
-    }
-
-};
+    return true;
+}
 int main()
 {
-    Stack d(4);
-    d.push(2);
-    cout<<d.front()<<" ";
-    d.pop();
-    d.pop();
+    string s = "[()]{}";
+    cout << bal(s);
 }
