@@ -34,7 +34,7 @@ bool bal(string s)
             }
         }
     }
-    return true;
+    return st.empty()==true;
 }
 int main()
 {
