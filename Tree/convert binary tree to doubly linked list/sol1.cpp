@@ -19,37 +19,34 @@ void print(Node *head)
         temp = temp->right;
     }
 }
-Node *BTToDLL(Node *root)
-{
-    if (root == NULL)
-    {
-        return root;
-    }
-    static Node *pre = NULL;
-    Node *head = BTToDLL(root->left);
-    if (pre == NULL)
-    {
-        head = root;
-    }
-    else
-    {
-        root->left = pre;
-        pre->right = root;
-    }
-    pre = root;
-    BTToDLL(root->right);
-    return head;
-}
-void inorder(Node *root)
+void inorder(Node *root, vector<int> &ans)
 {
     if (root == NULL)
     {
         return;
     }
-    inorder(root->left);
+    inorder(root->left, ans);
     cout << root->data << " ";
-    inorder(root->right);
+    ans.push_back(root->data);
+    inorder(root->right, ans);
 }
+Node *BTToDLL(Node *root)
+{
+    vector<int> ans;
+    inorder(root, ans);
+    Node *head = new Node(ans[0]);
+    Node *curr = head;
+    for (int i = 1; i < ans.size(); i++)
+    {
+
+        Node *val = new Node(ans[i]);
+        curr->right = val;
+        val->left = curr;
+        curr = curr->right;
+    }
+    return head;
+}
+
 int main()
 {
     Node *root = new Node(10);
@@ -59,5 +56,6 @@ int main()
     root->right->right = new Node(13);
     // inorder(root);
     Node *head = BTToDLL(root);
+    cout << endl;
     print(head);
 }
