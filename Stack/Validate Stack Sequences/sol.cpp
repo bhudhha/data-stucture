@@ -1,39 +1,65 @@
-/*Given two integer arrays pushed and popped each with distinct values, return true if
-this could have been the result of a sequence of push and pop operations on an initially empty stack,
-or false otherwise.
-
-
-
-Example 1:
-
-Input: pushed = [1,2,3,4,5], popped = [4,5,3,2,1]
-Output: true
-Explanation: We might do the following sequence:
-push(1), push(2), push(3), push(4),
-pop() -> 4,
-push(5),
-pop() -> 5, pop() -> 3, pop() -> 2, pop() -> 1*/
-
 #include <bits/stdc++.h>
 using namespace std;
-bool fun(vector<int> pushed, vector<int> popped)
+class Solution
 {
-    stack<int> st;
-    int j = 0;
-    for (int i = 0; i < pushed.size(); i++)
+public:
+    int countCollisions(string d)
     {
-        st.push(pushed[i]);
-        while (!st.empty() && popped[j] == st.top())
+        int i = 0;
+        int n = d.size();
+        int count = 0;
+        while (i < n)
         {
-            st.pop();
-            j++;
+            if (d[i] == 'S')
+            {
+                i++;
+                continue;
+            }
+            if (d[i] == 'R' and i < n - 1)
+            {
+                if (d[i + 1] == 'S')
+                {
+                    d[i] = 'S';
+                    count += 1;
+                    if (i > 0 and d[i - 1] == 'R')
+                        i--;
+
+                    else
+                        i++;
+                }
+                else if (d[i + 1] == 'L')
+                {
+                    count += 2;
+                    d[i] = 'S';
+                    d[i + 1] = 'S';
+
+                    if (i > 0 and d[i - 1] == 'R')
+                        i--;
+                    else
+                        i++;
+                }
+
+                else
+                    i++;
+            }
+            else if (d[i] == 'L' and i > 0)
+            {
+                if (d[i - 1] == 'S')
+                {
+                    count += 1;
+                    d[i] = 'S';
+                }
+                else if (d[i - 1] == 'R')
+                {
+                    count += 1;
+                    d[i] = 'S';
+                    d[i - 1] = 'S';
+                }
+                i++;
+            }
+            else
+                i++;
         }
+        return count;
     }
-    return st.empty();
-}
-int main()
-{
-    vector<int> pushed = {1, 2, 3, 4, 5};
-    vector<int> popped = {4, 5, 3, 2, 1};
-    cout << fun(pushed, popped);
-}
+};
