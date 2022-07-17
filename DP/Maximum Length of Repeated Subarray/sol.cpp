@@ -1,0 +1,19 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    vector<int> nums1 = {1, 2, 3, 2, 1}, nums2 = {3, 2, 1, 4, 7};
+    int n = nums1.size(), m = nums2.size();
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+    for (int i = n - 1; i >= 0; i--)
+        for (int j = m - 1; j >= 0; j--)
+            if (nums1[i] == nums2[j])
+                dp[i][j] = dp[i + 1][j + 1] + 1;
+
+    int ans = 0;
+    for (int i = n - 1; i >= 0; i--)
+        for (int j = m - 1; j >= 0; j--)
+            ans = max(ans, dp[i][j]);
+
+    cout << ans;
+}
